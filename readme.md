@@ -2,7 +2,8 @@
 
 ## Database Schema Design
 
-![airBnB Clone](https://user-images.githubusercontent.com/80603130/216241740-63fdef4b-d25f-45d5-a130-0d381962bc5e.png)
+
+![airBnB Clone-2](https://user-images.githubusercontent.com/80603130/216242625-36c72db9-f5ad-417c-b8f6-8462bc2ad6ad.png)
 
 
 
