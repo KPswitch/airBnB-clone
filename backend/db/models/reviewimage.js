@@ -11,9 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ReviewImage.hasOne (
-        models.Spot,
-        {foreignKey: 'spotId'}
+      ReviewImage.belongsTo(
+        models.Spot
       )
     }
   }
