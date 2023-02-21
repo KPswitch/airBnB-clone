@@ -53,7 +53,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      previewImage: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      avgRating: {
+        allowNull: true,
+        type: Sequelize.FLOAT
       }
+
     }, options);
   },
   async down(queryInterface, Sequelize) {
