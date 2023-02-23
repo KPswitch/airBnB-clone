@@ -2,6 +2,10 @@
 const {
   Model
 } = require('sequelize');
+// let schema;
+// if (process.env.NODE_ENV === 'production'){
+//   schema = process.env.SCHEMA
+// }
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -41,6 +45,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    // defaultScope: {
+    //   attributes: {
+    //     include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
+    //     [Sequelize.literal(`(SELECT url FROM
+    //         ${scheme ? `"${schema}"."SpotImages"` : 'SpotImages'} Where 'SpotImages.'spotId = 'Spot'.'id AND 'SpotImages.'previewImage' = true LIMIT 1)`), 'previewImage']]
+    // }
+    // }
   });
   return Spot;
 };

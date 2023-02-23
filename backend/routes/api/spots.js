@@ -1,9 +1,12 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage } = require('../../db/models');
+const { User, Spot, SpotImage, Sequelize, Review} = require('../../db/models');
 
 const router = express.Router();
-
+let schema;
+if (process.env.NODE_ENV === 'production'){
+  schema = process.env.SCHEMA
+}
 
 
 router.get('/', async (req, res) => {
@@ -62,5 +65,27 @@ router.get('/', async (req, res) => {
         })
         res.json(spots)
   } )
+
+  router.get('/:spotId', async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId, {
+      include: [
+        {
+          model: Review,
+          attributes: [],
+        }],
+      attributes: {
+        include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+          [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : 'SpotImages'}
+          WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), 'previewImage']
+        ]
+      }
+    });
+    if(spot.id === null) res.status(404).json('No spot exist with given id.');
+    res.json(spot);
+  });
+
+
+
 
 module.exports = router;
