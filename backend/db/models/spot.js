@@ -1,7 +1,8 @@
 'use strict';
 const {
-  Model
+  Model, INTEGER
 } = require('sequelize');
+const { Sequelize } = require('.');
 // let schema;
 // if (process.env.NODE_ENV === 'production'){
 //   schema = process.env.SCHEMA
@@ -30,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    ownerId: DataTypes.INTEGER,
+    ownerId:{
+      type: DataTypes.INTEGER,
+    allowNull: false},
+
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,

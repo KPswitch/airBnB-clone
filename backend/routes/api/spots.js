@@ -85,7 +85,30 @@ router.get('/', async (req, res) => {
     res.json(spot);
   });
 
+  router.put('/:spotId', requireAuth, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if(spot && spot.ownerId === req.user.id){
+      const {address, city, state, country, lat, lng, name, description, price} = req.body;
+     await spot.update({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng:lng,
+        name: name,
+        description: description,
+        price: price
+    }, {
+      where: {
+        id: req.params.spotId // Specify the primary key of the Spot record to update
+      }})
+    res.json(spot)
+    } else {
+      res.status(404).json('Spot does not exist')
+    }
 
+  })
 
 
 module.exports = router;
