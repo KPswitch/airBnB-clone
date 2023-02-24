@@ -1,7 +1,12 @@
 'use strict';
 const {
-  Model
+  Model, INTEGER
 } = require('sequelize');
+const { Sequelize } = require('.');
+// let schema;
+// if (process.env.NODE_ENV === 'production'){
+//   schema = process.env.SCHEMA
+// }
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -11,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Spot.belongsTo(
+        models.User, {foreignKey: 'ownerId'}
+      )
       Spot.hasMany(
         models.SpotImage,
         { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true}
@@ -26,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    ownerId: DataTypes.INTEGER,
+    ownerId:{
+      type: DataTypes.INTEGER,
+    allowNull: false},
+
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
@@ -41,6 +52,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    // defaultScope: {
+    //   attributes: {
+    //     include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
+    //     [Sequelize.literal(`(SELECT url FROM
+    //         ${scheme ? `"${schema}"."SpotImages"` : 'SpotImages'} Where 'SpotImages.'spotId = 'Spot'.'id AND 'SpotImages.'previewImage' = true LIMIT 1)`), 'previewImage']]
+    // }
+    // }
   });
   return Spot;
 };

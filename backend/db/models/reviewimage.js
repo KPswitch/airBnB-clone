@@ -11,15 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ReviewImage.belongsTo(
-        models.Spot
+      // ReviewImage.belongsTo(
+      //   models.Spot
+      // ),
+         ReviewImage.belongsTo(
+        models.Review
       )
     }
   }
   ReviewImage.init({
-    reviewId: DataTypes.INTEGER,
-    spotId: DataTypes.INTEGER,
-    url: DataTypes.STRING
+    reviewId: {
+      type: DataTypes.INTEGER,
+    allowNull: true},
+
+      // spotId: {
+      //   type: DataTypes.INTEGER,
+      // allowNull: true}
+
+    //spotId: DataTypes.INTEGER,
+    url: {
+      type: DataTypes.STRING}
   }, {
     sequelize,
     modelName: 'ReviewImage',
