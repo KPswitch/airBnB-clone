@@ -81,6 +81,7 @@ router.get('/', async (req, res) => {
        }],
        attributes: {
         include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
           [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : 'SpotImages'}
           WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), 'previewImage']
         ]
