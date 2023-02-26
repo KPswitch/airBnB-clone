@@ -3,11 +3,11 @@ const { requireAuth } = require('../../utils/auth');
 const { Op } = require('sequelize');
 const { User, Spot, SpotImage, Sequelize, Review, ReviewImage, Booking} = require('../../db/models');
 
-const router = express.Router();
 let schema;
 if (process.env.NODE_ENV === 'production'){
   schema = process.env.SCHEMA
 }
+const router = express.Router();
 
 
 router.get('/', async (req, res) => {
