@@ -81,6 +81,7 @@ router.get('/', async (req, res) => {
        }],
        attributes: {
         include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
           [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : 'SpotImages'}
           WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), 'previewImage']
         ]
@@ -124,7 +125,6 @@ router.get('/', async (req, res) => {
       })
       if(existingReview) res.status(403).json('Review already exists');
       else {
-    //
       const {review, stars} = req.body;
       const newReview = await Review.create(
        { userId: req.user.id,
@@ -185,6 +185,20 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       })
       res.json(newBooking)
     }
+
+})
+
+router.get('/:spotIdForBooking/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotIdForBooking);
+  if(!spot) res.status(404).json('Spot does not exist');
+  if(spot.ownerId !== req.user.id){
+    const booked = await Booking.scope('forGuest').findAll()
+    res.json(booked)
+  };
+  if(spot.ownerId === req.user.id) {
+    const booked = await Booking.scope({ method: ["forOwner", req.user.id]}).findAll()
+    res.json(booked)
+  }
 
 })
 
