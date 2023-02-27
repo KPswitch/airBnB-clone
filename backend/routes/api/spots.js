@@ -11,7 +11,41 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-      const spots = await Spot.findAll();
+      const page = parseInt(req.query.page) || 1;
+      const size = parseInt(req.query.size) || 20;
+      const minLat = parseFloat(req.query.minLat) || -90;
+      const maxLat = parseFloat(req.query.maxLat) || 90;
+      const minLng = parseFloat(req.query.minLng) || -180;
+      const maxLng = parseFloat(req.query.maxLng) || 180;
+      const minPrice = parseFloat(req.query.minPrice) || 0;
+      const maxPrice = parseFloat(req.query.maxPrice) || Number.MAX_SAFE_INTEGER;
+
+      if (page < 1 || page > 10) {
+        return res.status(400).json({ message: 'Invalid page parameter' });
+      }
+      if (size < 1 || size > 20) {
+        return res.status(400).json({ message: 'Invalid size parameter' });
+      }
+      if (minLat < -90 || minLat > 90 || maxLat < -90 || maxLat > 90 || minLat > maxLat) {
+        return res.status(400).json({ message: 'Invalid latitude parameters' });
+      }
+      if (minLng < -180 || minLng > 180 || maxLng < -180 || maxLng > 180 || minLng > maxLng) {
+        return res.status(400).json({ message: 'Invalid longitude parameters' });
+      }
+      if (minPrice < 0 || maxPrice < 0 || minPrice > maxPrice) {
+        return res.status(400).json({ message: 'Invalid price parameters' });
+      }
+      const spots = await Spot.findAll({
+        limit: size,
+        offset: (page -1) * size,
+        where: {
+          lat: { [Op.between]: [minLat, maxLat] },
+          lng: { [Op.between]: [minLng, maxLng] },
+          price: { [Op.between]: [minPrice, maxPrice] }
+        }
+
+
+      });
       //console.log(spots)
       return res.json(spots);
     }
@@ -201,6 +235,21 @@ router.get('/:spotIdForBooking/bookings', requireAuth, async (req, res) => {
   }
 
 })
+
+router.delete('/:spotId', requireAuth, async (req, res) => {
+  //const id = parseInt(req.params.spotImageId)
+
+  const spot = await Spot.findByPk(req.params.spotId);
+  if(spot){
+      //if( new Date(booking.startDate) < new Date()) res.status(403).json("Bookings that have been started can't be deleted")
+  //const spot = await Spot.findByPk(booking.spotId);
+  if (spot.ownerId === req.user.id){
+      await spot.destroy();
+      res.status(200).json("Successfully deleted")
+  } else res.status(404).json('Can not delete spots you do not own')} else
+  res.status(404).json("Spot couldn't be found")
+})
+
 
 
 module.exports = router;
