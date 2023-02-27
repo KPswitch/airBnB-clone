@@ -141,7 +141,7 @@ router.get('/', async (req, res) => {
 
     }
     );
-    if(spot.id === null) res.status(404).json('No spot exist with given id.');
+    if(!spot) res.status(404).json('No spot exist with given id.');
     res.json(spot);
   });
 
