@@ -132,7 +132,7 @@ router.get('/', async (req, res) => {
                 WHERE "spotId" = "Spot".id)`
             ), "star"],
             [Sequelize.literal(
-                `(SELECT "imageURL"
+                `(SELECT "url"
                 FROM ${tableImage}
                 WHERE "spotId" = "Spot".id AND "previewImage" = true)`
             ), "previewImage"]
