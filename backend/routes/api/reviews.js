@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Sequelize, Review, ReviewImage} = require('../../db/models');
+const { User, Spot, Review, ReviewImage} = require('../../db/models');
 const router = express.Router();
 
 
@@ -56,6 +56,17 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     }
 })
 
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+
+    const review = await Review.findByPk(req.params.reviewId);
+    if(review){
+    //const spot = await Spot.findByPk(booking.spotId);
+    if (review.userId === req.user.id){
+        await review.destroy();
+        res.status(200).json("Successfully deleted")
+    } else res.status(404).json('Can not delete reviews you do not own')} else
+    res.status(404).json("Review couldn't be found")
+})
 
 
 
