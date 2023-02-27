@@ -1,10 +1,14 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Op } = require('sequelize');
-let schema;
-if (process.env.NODE_ENV === 'production'){
-  schema = process.env.SCHEMA
-}
+// let schema;
+// if (process.env.NODE_ENV === 'production'){
+//   schema = process.env.SCHEMA
+// }
+const env = process.env.NODE_ENV
+const schema = process.env.SCHEMA
+const tableReview = env ===  "production" ? schema + '."Reviews"' : "Reviews"
+const tableImage = env ===  "production" ? schema + '."SpotImages"' : "Reviews"
 const { User, Spot, SpotImage, Sequelize, Review, ReviewImage, Booking} = require('../../db/models');
 
 const router = express.Router();
@@ -104,22 +108,38 @@ router.get('/', async (req, res) => {
 
   router.get('/:spotId', async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId, {
-      include: [
-        {
-          model: Review,
-          attributes: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']]
-        },
-        {
-          model: User,
-          attributes: ['firstName', 'lastName']
-       }],
-       attributes: {
+      // include: [
+      //   {
+      //     model: Review,
+      //     attributes: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']]
+      //   },
+      //   {
+      //     model: User,
+      //     attributes: ['firstName', 'lastName']
+      //  }],
+      //  attributes: {
+      //   include: [
+      //     [Sequelize.fn('AVG', Sequelize.col("Reviews.stars")), "avgRating",],
+      //     [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : "SpotImages"}
+      //     WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), "previewImage"]
+      //   ]
+      // }
+      attributes: {
         include: [
-          [Sequelize.fn('AVG', Sequelize.col("Reviews.stars")), "avgRating",],
-          [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : "SpotImages"}
-          WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), "previewImage"]
+            [Sequelize.literal(
+                `(SELECT AVG(stars)
+                FROM ${tableReview}
+                WHERE "spotId" = "Spot".id)`
+            ), "star"],
+            [Sequelize.literal(
+                `(SELECT "imageURL"
+                FROM ${tableImage}
+                WHERE "spotId" = "Spot".id AND "previewImage" = true)`
+            ), "previewImage"]
         ]
-      }}
+    },
+
+    }
     );
     if(spot.id === null) res.status(404).json('No spot exist with given id.');
     res.json(spot);
