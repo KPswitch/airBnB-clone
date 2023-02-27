@@ -1,12 +1,12 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Op } = require('sequelize');
-const { User, Spot, SpotImage, Sequelize, Review, ReviewImage, Booking} = require('../../db/models');
-
 let schema;
 if (process.env.NODE_ENV === 'production'){
   schema = process.env.SCHEMA
 }
+const { User, Spot, SpotImage, Sequelize, Review, ReviewImage, Booking} = require('../../db/models');
+
 const router = express.Router();
 
 
@@ -81,9 +81,9 @@ router.get('/', async (req, res) => {
        }],
        attributes: {
         include: [
-          [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
-          [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : 'SpotImages'}
-          WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), 'previewImage']
+          [Sequelize.fn('AVG', Sequelize.col("Reviews.stars")), "avgRating",],
+          [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : "SpotImages"}
+          WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), "previewImage"]
         ]
       }}
     );
