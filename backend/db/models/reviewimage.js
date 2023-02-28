@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       //   models.Spot
       // ),
          ReviewImage.belongsTo(
-        models.Review
+        models.Review, {foreignKey: "reviewId"}
       )
     }
   }
