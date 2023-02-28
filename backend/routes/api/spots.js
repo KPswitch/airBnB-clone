@@ -149,7 +149,8 @@ router.get('/', async (req, res) => {
   } )
 
   router.get('/:spotId', async (req, res) => {
-    const spot = await Spot.findByPk(req.params.spotId, {
+    const spot = await Spot.findAll({
+      where:  {id: req.params.spotId},
 
       attributes: {
         include: [
@@ -178,7 +179,7 @@ router.get('/', async (req, res) => {
             ],
 
     }
-    );
+  );
     //spot.numReviews = spot.Reviews.length;
     if(!spot) res.status(404).json('No spot exist with given id.');
    else res.json(spot);
