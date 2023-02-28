@@ -5,7 +5,6 @@ const { User } = require('../db/models');
 const { secret, expiresIn } = jwtConfig;
 
 const setTokenCookie = (res, user) => {
-    // Create token
     const token = jwt.sign(
       { data: user.toSafeObject() },
       secret,
@@ -14,7 +13,7 @@ const setTokenCookie = (res, user) => {
 
     const isProduction = process.env.NODE_ENV === "production";
 
-    // Set token cookie
+
     res.cookie('token', token, {
       maxAge: expiresIn * 1000,
       httpOnly: true,
@@ -26,7 +25,6 @@ const setTokenCookie = (res, user) => {
   };
 
   const restoreUser = (req, res, next) => {
-    // token parsed from cookies
     const { token } = req.cookies;
     req.user = null;
 
@@ -52,7 +50,7 @@ const setTokenCookie = (res, user) => {
   const requireAuth = function (req, _res, next) {
     if (req.user) return next();
 
-    const err = new Error('Unauthorized');
+    const err = new Error('Authentication required');
     err.title = 'Unauthorized';
     err.errors = ['Unauthorized'];
     err.status = 401;

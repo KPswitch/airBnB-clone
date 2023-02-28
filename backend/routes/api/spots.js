@@ -8,7 +8,7 @@ const { Op } = require('sequelize');
 const env = process.env.NODE_ENV
 const schema = process.env.SCHEMA
 const tableReview = env ===  "production" ? schema + '."Reviews"' : "Reviews"
-const tableImage = env ===  "production" ? schema + '."SpotImages"' : "Reviews"
+const tableImage = env ===  "production" ? schema + '."SpotImages"' : "SpotImages"
 const { User, Spot, SpotImage, Sequelize, Review, ReviewImage, Booking} = require('../../db/models');
 
 const router = express.Router();
@@ -46,7 +46,35 @@ router.get('/', async (req, res) => {
           lat: { [Op.between]: [minLat, maxLat] },
           lng: { [Op.between]: [minLng, maxLng] },
           price: { [Op.between]: [minPrice, maxPrice] }
-        }
+        },
+        attributes: {
+          include: [
+              [Sequelize.literal(
+                  `(SELECT AVG(stars)
+                  FROM ${tableReview}
+                  WHERE "spotId" = "Spot".id)`
+              ), "avgRating"],
+              [Sequelize.literal(
+                  `(SELECT "url"
+                  FROM ${tableImage}
+                  WHERE "spotId" = "Spot".id AND "previewImage" = true Limit 1)`
+              ), "previewImage"]
+          ]
+      }
+        // include: [
+        //   // {
+        //   //   model: Review,
+        //   //   attributes: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
+        //   //   // ,group: ['spotId']
+        //   // },
+        //   {
+        //     model: SpotImage,
+        //     attributes: ['url'],
+        //     where: {
+        //       previewImage: true
+        //   }
+        // }
+        // ]
 
 
       });
@@ -101,48 +129,59 @@ router.get('/', async (req, res) => {
         const spots = await Spot.findAll({
             where: {
                 ownerId: req.user.id
-            }
+            },
+            attributes: {
+              include: [
+                  [Sequelize.literal(
+                      `(SELECT AVG(stars)
+                      FROM ${tableReview}
+                      WHERE "spotId" = "Spot".id)`
+                  ), "avgRating"],
+                  [Sequelize.literal(
+                      `(SELECT "url"
+                      FROM ${tableImage}
+                      WHERE "spotId" = "Spot".id AND "previewImage" = true Limit 1)`
+                  ), "previewImage"]
+              ]
+          }
         })
         res.json(spots)
   } )
 
   router.get('/:spotId', async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId, {
-      // include: [
-      //   {
-      //     model: Review,
-      //     attributes: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']]
-      //   },
-      //   {
-      //     model: User,
-      //     attributes: ['firstName', 'lastName']
-      //  }],
-      //  attributes: {
-      //   include: [
-      //     [Sequelize.fn('AVG', Sequelize.col("Reviews.stars")), "avgRating",],
-      //     [Sequelize.literal(`(SELECT url FROM ${schema ? `"${schema}"."SpotImages"` : "SpotImages"}
-      //     WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."previewImage" = true LIMIT 1)`), "previewImage"]
-      //   ]
-      // }
+
       attributes: {
         include: [
             [Sequelize.literal(
                 `(SELECT AVG(stars)
                 FROM ${tableReview}
                 WHERE "spotId" = "Spot".id)`
-            ), "star"],
-            [Sequelize.literal(
-                `(SELECT "url"
-                FROM ${tableImage}
-                WHERE "spotId" = "Spot".id AND "previewImage" = true)`
-            ), "previewImage"]
-        ]
-    },
+            ), "AvgStarRating"], [
+              Sequelize.fn('COUNT', Sequelize.col('reviews.spotId')),
+              'numReviews',
+            ]],
+            },
+            include: [
+              {
+                model: Review,
+                attributes: [],
+              },
+              {
+                model: SpotImage,
+                attributes: ["id", "url", "previewImage"],
+              },
+              {
+                model: User,
+                attributes: ["id", "firstName", "lastName"],
+              },
+            ],
 
     }
     );
+    //spot.numReviews = spot.Reviews.length;
     if(!spot) res.status(404).json('No spot exist with given id.');
-    res.json(spot);
+   else res.json(spot);
   });
 
   router.put('/:spotId', requireAuth, async (req, res) => {
