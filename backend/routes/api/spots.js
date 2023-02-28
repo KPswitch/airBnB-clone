@@ -149,7 +149,7 @@ router.get('/', async (req, res) => {
   } )
 
   router.get('/:spotId', async (req, res) => {
-    const spot = await Spot.findAll({
+    const spot = await Spot.findByPk( req.params.spotId, {
       where:  {
         id: req.params.spotId
       },
