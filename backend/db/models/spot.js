@@ -1,8 +1,9 @@
 'use strict';
 const {
-  Model, INTEGER
+  Model
 } = require('sequelize');
 const { Sequelize } = require('.');
+
 // let schema;
 // if (process.env.NODE_ENV === 'production'){
 //   schema = process.env.SCHEMA
@@ -34,31 +35,115 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    ownerId:{
+    ownerId: {
       type: DataTypes.INTEGER,
-    allowNull: false},
-
-    address: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING,
-    lat: DataTypes.FLOAT,
-    lng: DataTypes.FLOAT,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    previewImage: DataTypes.STRING,
-    avgRating: DataTypes.INTEGER
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Street address is required'
+        }
+      }
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'City is required'
+        }
+      }
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'State is required'
+        }
+      }
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Country is required'
+        }
+      }
+    },
+    lat: {
+      type: DataTypes.FLOAT,
+      validate: {
+        isFloat: {
+          args: true,
+          msg: 'Latitude is not valid'
+        }
+      }
+    },
+    lng: {
+      type: DataTypes.FLOAT,
+      validate: {
+        isFloat: {
+          args: true,
+          msg: 'Longitude is not valid'
+        }
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Name is required'
+        },
+        len: {
+          args: [1, 50],
+          msg: 'Name must be less than 50 characters'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Description is required'
+        }
+      }
+    },
+    price: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Price per day is required'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Spot',
-    // defaultScope: {
-    //   attributes: {
-    //     include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating',],
-    //     [Sequelize.literal(`(SELECT url FROM
-    //         ${scheme ? `"${schema}"."SpotImages"` : 'SpotImages'} Where 'SpotImages.'spotId = 'Spot'.'id AND 'SpotImages.'previewImage' = true LIMIT 1)`), 'previewImage']]
-    // }
-    // }
+    validate: {
+
+      validLatLng() {
+        if (this.lat && this.lng) {
+          if (this.lat < -90 || this.lat > 90 || this.lng < -180 || this.lng > 180) {
+            throw new Error('Latitude/Longitude is not valid')
+          }
+        }
+      }
+    }
   });
   return Spot;
 };
