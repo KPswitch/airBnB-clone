@@ -150,7 +150,9 @@ router.get('/', async (req, res) => {
 
   router.get('/:spotId', async (req, res) => {
     const spot = await Spot.findAll({
-      where:  {id: req.params.spotId},
+      where:  {
+        id: req.params.spotId
+      },
 
       attributes: {
         include: [
@@ -158,10 +160,12 @@ router.get('/', async (req, res) => {
                 `(SELECT AVG(stars)
                 FROM ${tableReview}
                 WHERE "spotId" = "Spot".id)`
-            ), "AvgStarRating"], [
-              Sequelize.fn('COUNT', Sequelize.col('reviews.spotId')),
-              'numReviews',
-            ]],
+            ), "AvgStarRating"],
+            // [
+            //   Sequelize.fn('COUNT', Sequelize.col('reviews.spotId')),
+            //   'numReviews',
+            // ]
+          ],
             },
             include: [
               {
