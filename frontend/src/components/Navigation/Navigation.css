@@ -1,0 +1,33 @@
+.navbar {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}
+
+.home-image {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.profile-button {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    list-style-type: none;
+  }
+
+  .profile-dropdown.hidden {
+    display: none;
+  }

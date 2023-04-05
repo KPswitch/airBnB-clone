@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-    <LogoHeader />
+
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>

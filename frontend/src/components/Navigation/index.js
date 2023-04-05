@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import airbnbLogo from '../Logo/airbnblogo.png'
 
 import './Navigation.css';
 
@@ -11,24 +12,38 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+
+
+      <div className='profile-button'>
         <ProfileButton user={sessionUser} />
-      </li>
+      </div>
+
     );
   } else {
     sessionLinks = (
+      <div className='navbar'>
       <li>
         <NavLink to="/login">Log In </NavLink>
+        <li>
         <NavLink to="/signup">Sign Up</NavLink>
+        </li>
       </li>
+      </div>
     );
   }
 
   return (
     <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+
+        <NavLink exact to="/">
+          <img src={airbnbLogo} alt='Home' className='home-image' />
+          Rarebnb
+
+
+
+
+        </NavLink>
+
       {isLoaded && sessionLinks}
     </ul>
   );

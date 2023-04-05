@@ -7,11 +7,11 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
 
+    const openMenu = () => {
+      if (showMenu) return;
+      setShowMenu(true);
+    };
   useEffect(() => {
     if (!showMenu) return;
 
@@ -36,7 +36,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        <i className="fa-solid fa-user" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li>{user.username}</li>
