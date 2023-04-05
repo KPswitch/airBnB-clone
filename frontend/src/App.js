@@ -5,6 +5,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignUpFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components//Navigation";
+import LogoHeader from "./components/Logo";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <>
+    <LogoHeader />
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
