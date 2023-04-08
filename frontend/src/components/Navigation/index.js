@@ -73,7 +73,6 @@ function Navigation({ isLoaded }){
           <img src={airbnbLogo} alt='Home' className='home-image' />
           Airbnb
         </NavLink>
-
       {isLoaded && sessionLinks}
     </ul>
     <hr />

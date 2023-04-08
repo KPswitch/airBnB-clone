@@ -1,8 +1,5 @@
 'use strict';
 
-const fs =require('fs')
-const path = require('path')
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
@@ -13,13 +10,12 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
 
-    const imageDir = path.join(__dirname, '..','images');
-    const imageFiles = readdirSync(imageDir)
+
 
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "origin.jpg",
+        url: "https://www.compass.com/m/44911effe02d6c76ea08f98b9a473e891540c17e_img_0_0aa2d/origin.jpg",
         previewImage: true
       },
       {
