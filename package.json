@@ -4,10 +4,9 @@
   "description": "## Database Schema Design",
   "main": "index.js",
   "dependencies": {
-
-
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm --prefix backend install backend",

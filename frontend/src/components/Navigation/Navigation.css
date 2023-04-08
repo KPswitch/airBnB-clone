@@ -1,3 +1,14 @@
+
+  .home-link {
+
+    font-family: 'geometric', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: #FF5A5F
+
+  }
+
+
 .navbar {
     position: fixed;
     top: 5px;
@@ -6,8 +17,8 @@
 
 .home-image {
     position: fixed;
-    top: 5px;
-    left: 5px;
+    top: 12px;
+    left: 12px;
     width: 30px;
     height: 30px;
 }

@@ -56,29 +56,28 @@ function Navigation({ isLoaded }){
     <ul className={ulClassName} ref={ulRef}>
       <li>
         <NavLink to="/login">Log In </NavLink>
+      </li>
         <li>
         <NavLink to="/signup">Sign Up</NavLink>
         </li>
-      </li>
       </ul>
       </>
     );
   }
 
   return (
+    <header className = 'page-header'>
+
     <ul>
-
-        <NavLink exact to="/">
+        <NavLink className = 'home-link' exact to="/">
           <img src={airbnbLogo} alt='Home' className='home-image' />
-          Rarebnb
-
-
-
-
+          Airbnb
         </NavLink>
 
       {isLoaded && sessionLinks}
     </ul>
+    <hr />
+    </header>
   );
 }
 
