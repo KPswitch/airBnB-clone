@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: "getaway.png",
+        url: "https://www.travelandleisure.com/thmb/TJKRKnf8BaYBxy-81eK6plcr5Jk=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/morongo-valley-california-cabin-rental-CABINSBNB1120-60d3bbd95f71468ca187247a5683ed2c.jpg",
         previewImage: true
       },
       {
@@ -40,22 +40,22 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: "image.url",
+        url: "https://www.boundlessroads.com/wp-content/uploads/2021/01/Santa-Barbara-luxury-estate.jpg",
         previewImage: true
       },
       {
         spotId: 3,
-        url: "image.url",
+        url: "image.jpg",
         previewImage: false
       },
       {
         spotId: 4,
-        url: "image.url",
+        url: "https://www.fontainebleau.com/fontainebleau/147/1/rooms.jpg",
         previewImage: true
       },
       {
         spotId: 5,
-        url: "image.url",
+        url: "https://media.architecturaldigest.com/photos/571e87ce818277135ff9149c/master/w_3000,h_2003,c_limit/chicago-penthouse-apartment-04.jpg",
         previewImage: true
       },
       {
