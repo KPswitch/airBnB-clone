@@ -21,10 +21,13 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     flex-grow: 1;
+
   }
 
 .spot-rating {
+
   color: rgb(232, 85, 17);
-  float: right;
+  margin-left: auto;
   font-weight: bold;
+  float: right;
 }

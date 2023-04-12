@@ -25,6 +25,8 @@ export const fetchSpotById = (id) => async(dispatch) => {
     }
 }
 
+
+
 export const getSpots = (spots) => {
     return {
         type: GET_SPOTS,

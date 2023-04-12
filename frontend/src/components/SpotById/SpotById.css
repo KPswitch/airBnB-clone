@@ -1,0 +1,17 @@
+.details-container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    padding: 10px;
+}
+
+.hosted-by {
+    flex: 1
+}
+
+.callout-box {
+    flex: 0 0 250px;
+    border: 1px solid black;
+    padding: 0 10px;
+}
