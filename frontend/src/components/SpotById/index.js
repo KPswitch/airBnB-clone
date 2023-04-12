@@ -10,6 +10,12 @@ const SpotDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const spot = useSelector(state => state.spots[id])
+    //const owner = useSelector(state => state.users[spot.ownerId]);
+
+    const previewImage = spot?.SpotImages?.find(image => image.previewImage);
+    const imageUrl = previewImage ? previewImage.url : "";
+    const images = spot?.SpotImages?.filter(image => !image.previewImage)
+    //const hasImages = images && images.length > 0;
 
     useEffect(() => {
         dispatch(fetchSpotById(id))
@@ -19,16 +25,27 @@ const SpotDetails = () => {
         return <div>Spot not Found</div>
     }
 
+    const handleReserveClick = () => {
+        alert("Feature coming soon")
+      }
+
     return (
         <div>
         <h1>{spot.name}</h1>
         <p>Location: {spot.city}, {spot.state}, {spot.country}</p>
         <div className="image-wrapper">
-        <img src={spot.previewImage} alt={spot.name} className="large-image" />
-
+        <img src={imageUrl} alt={spot.name} className="large-image" />
+        <div className="small-image">
+        { images?.map(image => <img key={image.id} src={image.url} alt={spot.name} />)}
+    </div>
       </div>
-        <p>{spot.description}</p>
-        <img src={spot.image} alt={spot.name} />
+      <p>Hosted by  </p>
+      <p>{spot.description}</p>
+      <div className="callout-box">
+        <p>Price: ${spot.price}/night</p>
+        <button onClick={handleReserveClick}>Reserve</button>
+      </div>
+
       </div>
 
     )
