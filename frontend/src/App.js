@@ -8,6 +8,7 @@ import Navigation from "./components//Navigation";
 import LogoHeader from "./components/Logo";
 import SpotComponent from "./components/HomeSpots";
 import SpotDetails from "./components/SpotById";
+import CreateSpotComponent from "./components/CreateSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='/spots/new'>
+            <CreateSpotComponent />
           </Route>
           <Route path='/spots/:id'>
             <SpotDetails />
