@@ -38,16 +38,23 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
 
+      <div className='profile-buttons'>
 
+      <div className='profile-button create-spot-button'>
+
+        <NavLink to="/spots/new">Create New Spot</NavLink>
+      </div>
       <div className='profile-button'>
+
         <ProfileButton user={sessionUser} />
+      </div>
       </div>
 
     );
   } else {
     sessionLinks = (
       <>
-      <div className='profile-button'>
+      <div className='profile-buttons'>
 
       <button onClick={openMenu}>
       <i className="fa-solid fa-user" />

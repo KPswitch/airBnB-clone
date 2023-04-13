@@ -22,16 +22,25 @@
     width: 30px;
     height: 30px;
 }
+.profile-buttons {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
 
+.create-spot-button {
+  margin-left: auto;
+}
 .profile-button {
-    position: fixed;
-    top: 5px;
-    right: 5px;
+margin-right: 10px;
+top: 10px;
 }
 
 .profile-dropdown {
     position: absolute;
-    top: 30px;
+    top: 25px;
     right: 0;
     background-color: #ffffff;
     border: 1px solid #cccccc;
@@ -41,4 +50,12 @@
 
   .profile-dropdown.hidden {
     display: none;
+  }
+
+
+
+  .nav-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }

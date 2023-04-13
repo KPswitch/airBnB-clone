@@ -12,6 +12,9 @@ const SpotDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const spot = useSelector(state => state.spots[id])
+    const [numReviews, setNumReviews] = useState(0);
+    //const reviews = useSelector(state => state.reviews);
+    //console.log(reviews)
 
     const SpotRating = ({ rating }) => {
       if (rating) {
@@ -29,16 +32,19 @@ const SpotDetails = () => {
               const previewImage = spot?.SpotImages?.find(image => image.previewImage);
               const imageUrl = previewImage ? previewImage.url : "";
               const images = spot?.SpotImages?.filter(image => !image.previewImage)
+             // const reviewCount = reviews.length
 
-
+              //console.log(reviewCount)
 
               useEffect(() => {
-                dispatch(fetchSpotById(id))
-              //dispatch(fetchReviews(id))
-              }, [dispatch, id])
+                dispatch(fetchSpotById(id));
+              dispatch(fetchReviews(id)).then(reviews => setNumReviews(reviews.length))
+               // dispatch(fetchReviews(id))
+            }, [dispatch, id])
 
 
             //const reviews = useSelector(state => state.reviews[id])
+            const reviewCount = numReviews?.length
 
 
 
@@ -69,6 +75,7 @@ const SpotDetails = () => {
       <div className="callout-box">
         <p>Price: ${spot.price}/night</p>
         <SpotRating rating={spot.AvgStarRating} />
+        <p>{numReviews} Reviews</p>
 
         <button onClick={handleReserveClick}>Reserve</button>
       </div>
