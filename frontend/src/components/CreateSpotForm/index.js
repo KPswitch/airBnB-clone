@@ -1,18 +1,22 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { createSpot } from "../../store/spot"
+import './CreateSpot.css'
+
 
 
 
 const CreateSpotComponent = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const [spotData, setSpotData] = useState({
         country:'',
         address:'',
         city:'',
         state:'',
-        lat:'',
-        lng:'',
+        lat:0,
+        lng:0,
         description:'',
         name:'',
         price:'',
@@ -32,14 +36,15 @@ const CreateSpotComponent = () => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("usubmittttedddddddd")
         dispatch(createSpot(spotData));
         setSpotData({
         country:'',
         address:'',
         city:'',
         state:'',
-        lat:'',
-        lng:'',
+        lat:0,
+        lng:0,
         description:'',
         title:'',
         price:'',
@@ -49,11 +54,12 @@ const CreateSpotComponent = () => {
         imageurl3:'',
         imageurl4:'',
         });
+        history.push(`/spots/${spotData.id}`);
       };
 
 
     return (
-        <div>
+        <div className="create-container">
           <h1>Create New Spot </h1>
           <h2>Where's your place located?</h2>
           <p>Guest will only get your exact address once they booked a reservation</p>
@@ -149,7 +155,7 @@ const CreateSpotComponent = () => {
                 />
             </label>
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
-        ,   <h2>Set a abse price for your spot</h2>
+        ,   <h2>Set a price for your spot</h2>
             <p>Competive pricing can help your listing stand out and rank higher in search results</p>
             <label>
                 $
@@ -213,10 +219,10 @@ const CreateSpotComponent = () => {
                 onChange={handleChange}
                 />
             </label>
-            </form>
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
-
           <button type="submit">Create Spot</button>
+            </form>
+
 
 
         </div>

@@ -1,4 +1,4 @@
-//import { csrfFetch } from "./csrf"
+import { csrfFetch } from "./csrf"
 
 const GET_SPOTS = 'spot/GET_SPOTS'
 const GET_SPOTID = 'spot/GET_SPOTID'
@@ -7,7 +7,7 @@ const CREATE_SPOT = 'spot/CREATE_SPOT';
 
 export const createSpot = (spotData) => async (dispatch) => {
 
-    const res = await fetch('/api/spots', {
+    const res = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -16,7 +16,7 @@ export const createSpot = (spotData) => async (dispatch) => {
     })
     const data = await res.json()
     if(res.ok) {
-        dispatch(getSpotById(data))
+        dispatch(createNewSpot(data))
     } else {throw res}
 };
 
@@ -53,19 +53,20 @@ export const getSpots = (spots) => {
 }
 
 export const getSpotById = (spot) => {
-    return (dispatch, getState) => {
-        dispatch({
+    return  {
+
             type: GET_SPOTID,
             spot
-        });
-        if (!getState().spots[spot.id]) {
-            dispatch({
+        };
+
+    }
+export const createNewSpot = (spot) => {
+            return {
                 type: CREATE_SPOT,
                 spot
-            })
+            }
         }
-    }
-  }
+
 const initialState = {}
 
 
