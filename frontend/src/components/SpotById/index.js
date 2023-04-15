@@ -12,7 +12,9 @@ const SpotDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const spot = useSelector(state => state.spots[id])
+    const reviewz = useSelector(state => state.reviews)
     const [numReviews, setNumReviews] = useState(0);
+
     //const reviews = useSelector(state => state.reviews);
     //console.log(reviews)
 
@@ -28,10 +30,39 @@ const SpotDetails = () => {
                 return <span className='spot-rating'>New</span>
               };}
 
+    const formatDate = (dateString) => {
+      const dateObj = new Date(dateString);
+      const month = dateObj.toLocaleString('default', { month: 'long' });
+      const year = dateObj.getFullYear();
+      const date = dateObj.getDate();
+      return `${month} ${date}, ${year}`;
+    }
+
+    const formatReview = (review) => {
+      //const user = review.userId;
+      //const firstName = user.firstName;
+      const date = formatDate(reviewz.createdAt);
+      const content = review.review;
+      return (
+        <div key={review.id} className="review">
+          <p>firstName</p>
+          <p>{date}</p>
+          <p>{content}</p>
+          <p>{review}</p>
+        </div>
+      );
+    }
+
 
               const previewImage = spot?.SpotImages?.find(image => image.previewImage);
               const imageUrl = previewImage ? previewImage.url : "";
               const images = spot?.SpotImages?.filter(image => !image.previewImage)
+              const reviewsArr = Object.values(reviewz).map(obj =>obj.review)
+              //const reviewsArr = Object.values(reviewz).map(({review, createdAt, userId}) => ({review, createdAt, userId}));
+
+              console.log("test here")
+              console.log(reviewsArr)
+              console.log(reviewz)
              // const reviewCount = reviews.length
 
               //console.log(reviewCount)
@@ -75,10 +106,22 @@ const SpotDetails = () => {
       <div className="callout-box">
         <p>Price: ${spot.price}/night</p>
         <SpotRating rating={spot.AvgStarRating} />
-        <p>{numReviews} Reviews</p>
+        <p>{reviewsArr.length} Reviews</p>
 
         <button onClick={handleReserveClick}>Reserve</button>
       </div>
+
+      </div>
+      <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
+      <div>
+      <SpotRating rating={spot.AvgStarRating} />
+      <h2>
+      {reviewsArr.length} Reviews
+      </h2>
+      {reviewsArr.map(review => formatReview(review))}
+      </div>
+      <div>
+
       </div>
 
       </div>
