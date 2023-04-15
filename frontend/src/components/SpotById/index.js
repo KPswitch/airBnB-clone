@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { fetchSpotById } from '../../store/spot'
-import { fetchReviews } from '../../store/review'
+import { fetchReviews, createReview} from '../../store/review'
+import AddReviewForm from '../ReviewForm'
 import './SpotById.css'
 
 
@@ -14,10 +15,14 @@ const SpotDetails = () => {
     const spot = useSelector(state => state.spots[id])
     const reviewz = useSelector(state => state.reviews)
     const [numReviews, setNumReviews] = useState(0);
-
-    //const reviews = useSelector(state => state.reviews);
-    //console.log(reviews)
-
+    const [showModal, setShowModal] = useState(false);
+    const sessionUser = useSelector(state => state.session.user);
+    const openModal = () => {
+        setShowModal(true);
+      }
+      const closeModal = () => {
+        setShowModal(false);
+      }
     const SpotRating = ({ rating }) => {
       if (rating) {
         const fullStarIcon = '⭐️';
@@ -30,24 +35,12 @@ const SpotDetails = () => {
                 return <span className='spot-rating'>New</span>
               };}
 
-    const formatDate = (dateString) => {
-      const dateObj = new Date(dateString);
-      const month = dateObj.toLocaleString('default', { month: 'long' });
-      const year = dateObj.getFullYear();
-      const date = dateObj.getDate();
-      return `${month} ${date}, ${year}`;
-    }
-
     const formatReview = (review) => {
-      //const user = review.userId;
-      //const firstName = user.firstName;
-      const date = formatDate(reviewz.createdAt);
+
       const content = review.review;
       return (
         <div key={review.id} className="review">
-          <p>firstName</p>
-          <p>{date}</p>
-          <p>{content}</p>
+
           <p>{review}</p>
         </div>
       );
@@ -58,26 +51,13 @@ const SpotDetails = () => {
               const imageUrl = previewImage ? previewImage.url : "";
               const images = spot?.SpotImages?.filter(image => !image.previewImage)
               const reviewsArr = Object.values(reviewz).map(obj =>obj.review)
-              //const reviewsArr = Object.values(reviewz).map(({review, createdAt, userId}) => ({review, createdAt, userId}));
-
-              console.log("test here")
-              console.log(reviewsArr)
-              console.log(reviewz)
-             // const reviewCount = reviews.length
-
-              //console.log(reviewCount)
-
+              const reviewOwners = Object.values(reviewz).map(obj=>obj.userId)
               useEffect(() => {
                 dispatch(fetchSpotById(id));
               dispatch(fetchReviews(id)).then(reviews => setNumReviews(reviews.length))
                // dispatch(fetchReviews(id))
             }, [dispatch, id])
-
-
-            //const reviews = useSelector(state => state.reviews[id])
             const reviewCount = numReviews?.length
-
-
 
     if(!spot) {
         return <div>Spot not Found</div>
@@ -118,6 +98,22 @@ const SpotDetails = () => {
       <h2>
       {reviewsArr.length} Reviews
       </h2>
+      {sessionUser && !reviewOwners.includes(sessionUser.id) && spot.ownerId !== sessionUser.id && (
+        <div>
+          <button onClick={openModal}>Post Your Review</button>
+        </div>
+      )}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <AddReviewForm spotId={spot.id} />
+          </div>
+        </div>
+      )}
+
       {reviewsArr.map(review => formatReview(review))}
       </div>
       <div>
