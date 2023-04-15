@@ -1,0 +1,26 @@
+.details-container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    padding: 10px;
+}
+
+.hosted-by {
+    flex: 1
+}
+
+.callout-box {
+    flex: 0 0 250px;
+    border: 1px solid black;
+    padding: 0 10px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+    width: 500px;
+    max-width: 90%;
+    padding: 20px;
+  }

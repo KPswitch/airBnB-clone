@@ -25,7 +25,12 @@ function LoginFormPage() {
       });
   }
 
+
+
   return (
+    <div className='overlay'>
+      <div className='login-box'>
+
     <form onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -50,6 +55,8 @@ function LoginFormPage() {
       </label>
       <button type="submit">Log In</button>
     </form>
+    </div>
+    </div>
   );
 }
 

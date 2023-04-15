@@ -1,0 +1,61 @@
+
+  .home-link {
+
+    font-family: 'geometric', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: #FF5A5F
+
+  }
+
+
+.navbar {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}
+
+.home-image {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 30px;
+    height: 30px;
+}
+.profile-buttons {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+.create-spot-button {
+  margin-left: auto;
+}
+.profile-button {
+margin-right: 10px;
+top: 10px;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    list-style-type: none;
+  }
+
+  .profile-dropdown.hidden {
+    display: none;
+  }
+
+
+
+  .nav-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }

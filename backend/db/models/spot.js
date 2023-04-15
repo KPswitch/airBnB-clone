@@ -85,6 +85,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     lat: {
       type: DataTypes.FLOAT,
+      allowNull: true,
       validate: {
         isFloat: {
           args: true,
@@ -94,6 +95,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     lng: {
       type: DataTypes.FLOAT,
+      allowNull: true,
       validate: {
         isFloat: {
           args: true,
@@ -141,7 +143,7 @@ module.exports = (sequelize, DataTypes) => {
     validate: {
 
       validLatLng() {
-        if (this.lat && this.lng) {
+        if (this.lat && this.lng)  {
           if (this.lat < -90 || this.lat > 90 || this.lng < -180 || this.lng > 180) {
             throw new Error('Latitude/Longitude is not valid')
           }

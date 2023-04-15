@@ -1,0 +1,33 @@
+.spot-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+
+  .spot {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spot img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .spot-info {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex-grow: 1;
+
+  }
+
+.spot-rating {
+
+  color: rgb(232, 85, 17);
+  margin-left: auto;
+  font-weight: bold;
+  float: right;
+}
