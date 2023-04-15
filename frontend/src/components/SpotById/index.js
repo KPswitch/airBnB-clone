@@ -109,12 +109,12 @@ const SpotDetails = () => {
             <span className="close" onClick={closeModal}>
               &times;
             </span>
-            <AddReviewForm spotId={spot.id} />
+            <AddReviewForm spotId={spot.id} closeModal={closeModal} />
           </div>
         </div>
       )}
 
-      {reviewsArr.map(review => formatReview(review))}
+      {reviewsArr.reverse().map(review => formatReview(review))}
       </div>
       <div>
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -14,11 +15,11 @@ function ProfileButton({ user }) {
     };
   useEffect(() => {
     if (!showMenu) return;
-
     const closeMenu = (e) => {
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
+
     };
 
     document.addEventListener('click', closeMenu);
@@ -29,6 +30,9 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+  };
+  const closeMenu = () => {
+    setShowMenu(false);
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -42,6 +46,12 @@ function ProfileButton({ user }) {
 
         <li>Hello, {user.firstName} </li>
         <li>{user.email}</li>
+        <hr />
+        <li>
+          <NavLink to="/manage-spots" onClick={closeMenu}>
+            Manage Spots
+          </NavLink>
+        </li>
         <li>
           <button onClick={logout}>Log Out</button>
         </li>

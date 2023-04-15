@@ -5,7 +5,8 @@ import { createReview, fetchReviews } from "../../store/review";
 
 
 
-const AddReviewForm = ({spotId}) => {
+
+const AddReviewForm = ({spotId, closeModal}) => {
     const dispatch = useDispatch()
     const[review, setReview] = useState('')
     const [stars, setStars] = useState(0);
@@ -18,8 +19,9 @@ const AddReviewForm = ({spotId}) => {
     })
         const data = await res.json();
         dispatch(fetchReviews(spotId))
+        closeModal()
         }
-
+        const isSubmitDisabled = review.length < 10 || stars === 0;
     return (
         <div>
             <h1>How was your Stay</h1>
@@ -27,13 +29,13 @@ const AddReviewForm = ({spotId}) => {
         <form onSubmit={handleReviewSubmit}>
               <label>
                 Review:
-                <input type="text" value={review} onChange={(e) => setReview(e.target.value)} />
+                <textarea value={review} onChange={(e) => setReview(e.target.value)} />
               </label>
               <label>
-                Stars:
                 <input type="number" min="0" max="5" value={stars} onChange={(e) => setStars(e.target.value)} />
+                Stars
               </label>
-              <button type="submit">Submit Review</button>
+              <button type="submit" disabled={isSubmitDisabled}>Submit Review</button>
             </form>
         </div>
           );
