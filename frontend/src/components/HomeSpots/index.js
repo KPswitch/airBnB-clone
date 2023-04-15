@@ -15,7 +15,7 @@ const SpotComponent = () => {
         const fullStarIcon = '⭐️';
            return (
                <span className="spot-rating">
-                 <span role="img" aria-label="star">{fullStarIcon}</span> {rating.toFixed(1)}
+                 <span role="img" aria-label="star">{fullStarIcon}</span> {rating}
                </span>
                )
      } else {
