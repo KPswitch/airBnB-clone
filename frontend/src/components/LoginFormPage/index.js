@@ -10,6 +10,7 @@ function LoginFormPage() {
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   if (sessionUser) return (
     <Redirect to="/" />

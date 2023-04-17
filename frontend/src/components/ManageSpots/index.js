@@ -70,8 +70,10 @@ const ManageSpotsComponent = () => {
 
 
     }
-    const handleUpdateClick = () => {
+    const handleUpdateClick = (spotId) => {
         setIsUpdateClicked(true)
+        setSpotIdToUpdate(spotId);
+
       setShowModal(true)
     };
 
@@ -82,7 +84,29 @@ const ManageSpotsComponent = () => {
     }
 
     const spotToUpdate = spotIdToUpdate ? userSpots.find(spot => spot.id === spotIdToUpdate) : null;
-
+    const ModalContent = () => {
+        if (spotIdToUpdate) {
+          return <UpdateSpotComponent data={spotToUpdate} />;
+        } else if (spotToDelete) {
+          return (
+            <>
+              <h2>Confirm Delete</h2>
+              <p>Are you sure you want to remove this spot?</p>
+              <button onClick={() => handleDeleteSpot(spotToDelete)}>
+                Yes (Delete Spot)
+              </button>
+              <button
+                onClick={() => {
+                  setSpotToDelete(null);
+                  setShowModal(false);
+                }}
+              >
+                No (Keep Spot)
+              </button>
+            </>
+          );
+        }
+    }
       return (
         <div >
           <h1>Manage Spots</h1>
@@ -99,21 +123,29 @@ const ManageSpotsComponent = () => {
                 </div>
 
               <div>
-                <button onClick={handleUpdateClick}>Update</button>
-                {showModal && (
-                    <div className="modal-overlay">
-                        <div className="modal">
-                            <button onClick={handleCloseModal}> Close </button>
-                            <UpdateSpotComponent data={spot} />
-                        </div>
-                    </div>
-                )}
+                <button onClick={ () => handleUpdateClick(spot.id)}>Update</button>
+                {spotIdToUpdate && (
+            <div className="modal-overlay">
+              <div className="modal">
+                <button onClick={handleCloseModal}>Close</button>
+                <UpdateSpotComponent data={spotToUpdate} />
+              </div>
+            </div>
+                  )}
                 <button onClick={() => handleDeleteClick(spot)}>Delete</button>
+                {/* {showModal && (
+                    <div className="modal-overlay">
+                    <div className="modal">
+                    <button onClick={handleCloseModal}> Close </button>
+                    <ModalContent  />
+                    </div>
+                    </div>
+                )} */}
               </div>
             </div>
           ))}
           {showModal && spotToDelete && (
-      <div className="modal-overlay">
+              <div className="modal-overlay">
         <div className="modal">
           <h2>Confirm Delete</h2>
           <p>Are you sure you want to remove this spot?</p>
@@ -126,24 +158,17 @@ const ManageSpotsComponent = () => {
       </div>
     )}
             </div>
-            {spotIdToUpdate && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <button onClick={handleCloseModal}>Close</button>
-            <UpdateSpotComponent data={spotToUpdate} />
-          </div>
-        </div>
-      )}
-      {showModal && !spotIdToUpdate && (
+      {/* {showModal && !spotIdToUpdate && (
         <div className="modal-overlay">
           <div className="modal">
             <button onClick={handleCloseModal}>Close</button>
             <UpdateSpotComponent />
           </div>
         </div>
-      )}
+      )} */}
         </div>
       );
 }
+
 
 export default ManageSpotsComponent

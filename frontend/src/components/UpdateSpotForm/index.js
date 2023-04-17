@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { createSpot, updateSpot,  } from "../../store/spot"
+import { createSpot, updateSpot, updateCurrentSpot  } from "../../store/spot"
 import './UpdateSpot.css'
 
 
@@ -35,10 +35,12 @@ const UpdateSpotComponent = ({data}) => {
         });
       };
 
-      const handleSubmit = (event) => {
+      const handleSubmit =  (event) => {
         event.preventDefault();
-        console.log("usubmittttedddddddd")
-        dispatch(updateSpot(spotData));
+
+        const updatedSpotData = {...spotData}
+        console.log(updatedSpotData)
+       dispatch(updateCurrentSpot(updatedSpotData));
         // setSpotData({
         // country:'',
         // address:'',
@@ -55,7 +57,7 @@ const UpdateSpotComponent = ({data}) => {
         // imageurl3:'',
         // imageurl4:'',
         // });
-        history.push(`/spots/${spotData.id}`);
+        history.push(`/spots/${data.id}`);
       };
 
 
@@ -221,7 +223,7 @@ const UpdateSpotComponent = ({data}) => {
                 />
             </label>
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
-          <button type="submit">Create Spot</button>
+          <button type="submit">Update Spot</button>
             </form>
 
 
