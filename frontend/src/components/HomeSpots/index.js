@@ -20,7 +20,7 @@ const SpotComponent = () => {
                )
      } else {
        return <span className='spot-rating'>New</span>
-     };}
+     }}
 
 
     useEffect(() => {
