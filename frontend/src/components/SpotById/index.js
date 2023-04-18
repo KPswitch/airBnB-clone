@@ -15,7 +15,7 @@ const SpotDetails = () => {
     const {id} = useParams();
     const spot = useSelector(state => state.spots[id])
     const users = useSelector(state => state.session.users);
-    const spotOwner = useSelector(state => state.spots[id].ownerId)
+    const spotOwner = useSelector(state => state.spots[id]?.ownerId)
     const reviewz = useSelector(state => state.reviews)
     const [numReviews, setNumReviews] = useState(0);
     const [showModal, setShowModal] = useState(false);
