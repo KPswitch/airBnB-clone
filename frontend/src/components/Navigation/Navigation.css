@@ -4,8 +4,7 @@
     font-family: 'geometric', sans-serif;
     font-size: 20px;
     text-decoration: none;
-    color: #FF5A5F;
-    position: absolute
+    color: #FF5A5F
 
   }
 
@@ -27,8 +26,8 @@
   display: flex;
   align-items: center;
   position: absolute;
-  top: 15px;
-  right: 20px;
+  top: 5px;
+  right: 70px;
 }
 
 .create-spot-button {
@@ -41,7 +40,7 @@ top: 10px;
 
 .profile-dropdown {
     position: absolute;
-    top: 25px;
+    top: 40px;
     right: 0;
     background-color: #ffffff;
     border: 1px solid #cccccc;
