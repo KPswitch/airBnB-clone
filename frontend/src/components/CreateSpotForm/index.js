@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createSpot } from "../../store/spot"
 import './CreateSpot.css'
@@ -10,7 +10,11 @@ import './CreateSpot.css'
 const CreateSpotComponent = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const user = useSelector((state) => state.session.user);
+    const userId = user? user.id : null;
+
     const [spotData, setSpotData] = useState({
+        ownerId: userId,
         country:'',
         address:'',
         city:'',
@@ -25,7 +29,12 @@ const CreateSpotComponent = () => {
         imageurl2:'',
         imageurl3:'',
         imageurl4:'',
+
     })
+    // const [errors, setErrors] = useState({
+    //     description: "",
+    //     previewImage: "",
+    //   });
 
     const handleChange = (event) => {
         setSpotData({
@@ -34,27 +43,50 @@ const CreateSpotComponent = () => {
         });
       };
 
-      const handleSubmit = (event) => {
+      const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("usubmittttedddddddd")
-        dispatch(createSpot(spotData));
-        setSpotData({
-        country:'',
-        address:'',
-        city:'',
-        state:'',
-        lat:0,
-        lng:0,
-        description:'',
-        title:'',
-        price:'',
-        previewImage:'',
+
+
+            const newSpot = await dispatch(createSpot(spotData));
+
+            // let errorMessages = {
+                //     description: "",
+                //     previewImage: "",
+                //   };
+
+                // let hasError = false;
+                // if (spotData.description.length < 30) {
+                    //     errorMessages.description = "Description needs 30 or more characters";
+                    //     hasError = true;
+                    //   }
+                    //   if (!spotData.previewImage) {
+                        //     errorMessages.previewImage = "Preview Image URL is required";
+                        //     hasError = true;
+                        //   }
+
+                        //   if (hasError) {
+                            //     setErrors(errorMessages);
+                            //     return;
+                            //   }
+                            // dispatch(createSpot(spotData));
+         setSpotData({
+                        country:'',
+                                address:'',
+                                city:'',
+                                state:'',
+                                lat:0,
+                                lng:0,
+                                description:'',
+                                title:'',
+                                price:'',
+                                previewImage:'',
         imageurl1:'',
         imageurl2:'',
         imageurl3:'',
         imageurl4:'',
-        });
-        history.push(`/spots/${spotData.id}`);
+    });
+    history.push(`/spots/${newSpot.id}`);
+
       };
 
 
@@ -141,6 +173,7 @@ const CreateSpotComponent = () => {
                 onChange={handleChange}
                 />
             </label>
+
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
             <h2>Create a title for your spot</h2>
             <p>Catch guest' attention with a spot title that highlights what makes your place special.</p>
@@ -179,6 +212,8 @@ const CreateSpotComponent = () => {
                 onChange={handleChange}
                 />
             </label>
+
+
             <br />
             <label>
                 <input

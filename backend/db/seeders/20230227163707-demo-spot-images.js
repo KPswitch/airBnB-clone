@@ -20,12 +20,12 @@ module.exports = {
       },
       {
         spotId: 1,
-        url: "getaway.png",
+        url: "https://media.sandiegoreader.com/img/photos/2013/09/30/unreal_view_t720.png?5755a55b677da5dfc6c8e05d88cfbaffe8abac5c",
         previewImage: false
       },
       {
         spotId: 1,
-        url: "image.url",
+        url: "https://www.spiresandiego.com/wp-content/uploads/2020/01/spire-OG.jpg",
         previewImage: false
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: "image.url",
+        url: "https://assets3.thrillist.com/v1/image/1677457/1200x630/flatten;crop_down;webp=auto;jpeg_quality=70",
         previewImage: false
       },
       {
@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: "image.jpg",
+        url: "https://images.trvl-media.com/hotels/30000000/29500000/29491000/29490942/57dbb810_z.jpg",
         previewImage: false
       },
       {
@@ -60,17 +60,17 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: "image2.url",
+        url: "https://images.mansionglobal.com/im-137803?width=1280",
         previewImage: false
       },
       {
         spotId: 5,
-        url: "image3.url",
+        url: "https://images.mansionglobal.com/im-137808?width=1280",
         previewImage: false
       },
       {
         spotId: 5,
-        url: "image4.url",
+        url: "https://cdn.luxatic.com/wp-content/uploads/2016/03/721-Fifth-Avenue-3.jpg",
         previewImage: false
       },
 

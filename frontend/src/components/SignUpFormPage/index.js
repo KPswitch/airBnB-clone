@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './SignupForm.css'
@@ -14,6 +14,31 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIsButtonDisabled(
+      !username || !email || !password || !confirmPassword ||
+      username.length < 4 || password.length < 6 || password !== confirmPassword
+    );
+  }, [username, email, password, confirmPassword]);
+
+  // const openMenu = () => {
+
+  //   if (showMenu || isLoginModalOpen || isSignUpModalOpen) return;
+  //   setShowMenu(true);
+  // };
+
+  // const handleSignUpModalOpen = () => {
+  //   setIsSignUpModalOpen(true);
+  // };
+
+  // const handleSignUpModalClose = () => {
+  //   setIsSignUpModalOpen(false);
+  // };
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -22,7 +47,8 @@ function SignupFormPage() {
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-        .catch(async (res) => {
+      //.then(()=>onClose())
+      .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
@@ -30,7 +56,38 @@ function SignupFormPage() {
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleModalClose = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setIsButtonDisabled(true);
+    setErrors([]);
+
+  };
+
   return (
+    <div>
+      <div classname="overlay">
+      <div className='signup-box'>
+
+
     <form onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -40,57 +97,67 @@ function SignupFormPage() {
         <input
           type="text"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          onChange={handleEmailChange}
           required
-        />
+          />
       </label>
       <label>
         Username
         <input
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="UserName"
+          onChange={handleUsernameChange}
           required
-        />
+          />
       </label>
       <label>
         First Name
         <input
           type="text"
           value={firstName}
+          placeholder="First Name"
           onChange={(e) => setFirstName(e.target.value)}
           required
-        />
+          />
       </label>
       <label>
         Last Name
         <input
           type="text"
           value={lastName}
+          placeholder="Last Name"
           onChange={(e) => setLastName(e.target.value)}
           required
-        />
+          />
       </label>
       <label>
         Password
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="password"
+          onChange={handlePasswordChange}
           required
-        />
+          />
       </label>
       <label>
         Confirm Password
         <input
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="confirm password"
+          onChange={handleConfirmPasswordChange}
           required
-        />
+          />
       </label>
-      <button type="submit">Sign Up</button>
+      <button type="submit" disabled={isButtonDisabled}>Sign Up</button>
+      <button type="button" onClick={handleModalClose}>Cancel</button>
     </form>
+    </div>
+    </div>
+          </div>
   );
 }
 

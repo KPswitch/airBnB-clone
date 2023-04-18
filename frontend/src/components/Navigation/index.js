@@ -2,13 +2,18 @@ import React, {useState, useEffect, useRef} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch,  } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import SignupFormPage from '../SignUpFormPage';
 import airbnbLogo from '../Logo/airbnblogo.png'
 
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const [showMenu, setShowMenu] = useState(false);
+  const [showSignupForm, setShowSignupForm] = useState(false);
   const ulRef = useRef();
+  const dispatch = useDispatch();
+
+
 
     const openMenu = () => {
       if (showMenu) return;
@@ -33,6 +38,10 @@ function Navigation({ isLoaded }){
 
 
   const sessionUser = useSelector(state => state.session.user);
+
+  const closeSignupForm = () => {
+    setShowSignupForm(false);
+  };
 
   let sessionLinks;
   if (sessionUser) {
@@ -65,6 +74,7 @@ function Navigation({ isLoaded }){
         <NavLink to="/login">Log In </NavLink>
       </li>
         <li>
+
         <NavLink to="/signup">Sign Up</NavLink>
         </li>
       </ul>

@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf"
 const GET_SPOTS = 'spot/GET_SPOTS'
 const GET_SPOTID = 'spot/GET_SPOTID'
 const CREATE_SPOT = 'spot/CREATE_SPOT';
-const UDPATE_SPOT = 'spot/UPDATE_SPOT'
+const UPDATE_SPOT = 'spot/UPDATE_SPOT'
 const DELETE_SPOT = 'spot/DELETE_SPOT'
 
 
@@ -101,7 +101,7 @@ export const createNewSpot = (spot) => {
 
 export const updateSpot = (spot) => {
     return {
-        type: UDPATE_SPOT,
+        type: UPDATE_SPOT,
         spot
     }
 }
@@ -126,7 +126,7 @@ const spotReducer = (state = initialState, action) => {
                 ...state,
                 [action.spot.id]: action.spot
             }
-        case UDPATE_SPOT:
+        case UPDATE_SPOT:
             return {
                 ...state,
                 [action.spot.id]: action.spot
