@@ -15,12 +15,12 @@ const SpotComponent = () => {
         const fullStarIcon = '⭐️';
            return (
                <span className="spot-rating">
-                 <span role="img" aria-label="star">{fullStarIcon}</span> {rating}
+                 <span role="img" aria-label="star">{fullStarIcon}</span> &middot; {rating.toFixed(1)}
                </span>
                )
      } else {
        return <span className='spot-rating'>New</span>
-     };}
+     }}
 
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const SpotComponent = () => {
 
             {spotList?.map(spot => (
                 <div key={spot.id} className="spot" onClick={() => handleSpotClick(spot.id)}>
-                <img src={spot.previewImage} alt={spot.name} />
+                <img src={spot.previewImage} alt={spot.name} title={spot.name} />
                 <div className="spot-info">
                   <span>{spot.city}, {spot.state}</span>
                   <SpotRating rating={spot.avgRating} />

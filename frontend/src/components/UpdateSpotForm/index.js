@@ -1,40 +1,32 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { createSpot } from "../../store/spot"
-import './CreateSpot.css'
+import { createSpot, updateSpot, updateCurrentSpot  } from "../../store/spot"
+import './UpdateSpot.css'
 
 
-
-
-const CreateSpotComponent = () => {
+const UpdateSpotComponent = ({data}) => {
+    console.log(data)
+    const spot = useSelector(state => state.spots[data]);
     const dispatch = useDispatch()
     const history = useHistory()
-    const user = useSelector((state) => state.session.user);
-    const userId = user? user.id : null;
 
     const [spotData, setSpotData] = useState({
-        ownerId: userId,
-        country:'',
-        address:'',
-        city:'',
-        state:'',
-        lat:0,
-        lng:0,
-        description:'',
-        name:'',
-        price:'',
-        previewImage:'',
-        imageurl1:'',
-        imageurl2:'',
-        imageurl3:'',
-        imageurl4:'',
-
+        country: data?.country || '',
+        address: data?.address || '',
+        city: data?.city || '',
+        state: data?.state || '',
+        lat: data?.lat || 0,
+        lng: data?.lng || 0,
+        description: data?.description || '',
+        name: data?.name || '',
+        price: data?.price || '',
+        previewImage: data?.previewImage || '',
+        imageurl1: data?.imageurl1 || '',
+        imageurl2: data?.imageurl2 || '',
+        imageurl3: data?.imageurl3 || '',
+        imageurl4: data?.imageurl4 || '',
     })
-    // const [errors, setErrors] = useState({
-    //     description: "",
-    //     previewImage: "",
-    //   });
 
     const handleChange = (event) => {
         setSpotData({
@@ -43,56 +35,35 @@ const CreateSpotComponent = () => {
         });
       };
 
-      const handleSubmit = async (event) => {
+      const handleSubmit =  (event) => {
         event.preventDefault();
 
-
-            const newSpot = await dispatch(createSpot(spotData));
-
-            // let errorMessages = {
-                //     description: "",
-                //     previewImage: "",
-                //   };
-
-                // let hasError = false;
-                // if (spotData.description.length < 30) {
-                    //     errorMessages.description = "Description needs 30 or more characters";
-                    //     hasError = true;
-                    //   }
-                    //   if (!spotData.previewImage) {
-                        //     errorMessages.previewImage = "Preview Image URL is required";
-                        //     hasError = true;
-                        //   }
-
-                        //   if (hasError) {
-                            //     setErrors(errorMessages);
-                            //     return;
-                            //   }
-                            // dispatch(createSpot(spotData));
-         setSpotData({
-                        country:'',
-                                address:'',
-                                city:'',
-                                state:'',
-                                lat:0,
-                                lng:0,
-                                description:'',
-                                title:'',
-                                price:'',
-                                previewImage:'',
-        imageurl1:'',
-        imageurl2:'',
-        imageurl3:'',
-        imageurl4:'',
-    });
-    history.push(`/spots/${newSpot.id}`);
-
+        const updatedSpotData = {...spotData}
+        console.log(updatedSpotData)
+       dispatch(updateCurrentSpot(updatedSpotData));
+        // setSpotData({
+        // country:'',
+        // address:'',
+        // city:'',
+        // state:'',
+        // lat:0,
+        // lng:0,
+        // description:'',
+        // title:'',
+        // price:'',
+        // previewImage:'',
+        // imageurl1:'',
+        // imageurl2:'',
+        // imageurl3:'',
+        // imageurl4:'',
+        // });
+        history.push(`/spots/${data.id}`);
       };
 
 
     return (
         <div className="create-container">
-          <h1>Create New Spot </h1>
+          <h1>Update your Spot</h1>
           <h2>Where's your place located?</h2>
           <p>Guest will only get your exact address once they booked a reservation</p>
           <form onSubmit={handleSubmit}>
@@ -173,7 +144,6 @@ const CreateSpotComponent = () => {
                 onChange={handleChange}
                 />
             </label>
-
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
             <h2>Create a title for your spot</h2>
             <p>Catch guest' attention with a spot title that highlights what makes your place special.</p>
@@ -212,8 +182,6 @@ const CreateSpotComponent = () => {
                 onChange={handleChange}
                 />
             </label>
-
-
             <br />
             <label>
                 <input
@@ -255,7 +223,7 @@ const CreateSpotComponent = () => {
                 />
             </label>
             <div style={{ borderBottom: '1px solid black', paddingBottom: '10px'}}></div>
-          <button type="submit">Create Spot</button>
+          <button type="submit">Update Spot</button>
             </form>
 
 
@@ -265,4 +233,4 @@ const CreateSpotComponent = () => {
 
 }
 
-export default CreateSpotComponent
+export default UpdateSpotComponent

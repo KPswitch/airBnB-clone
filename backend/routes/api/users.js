@@ -76,4 +76,19 @@ router.post(
     }
   );
 
+  router.get(
+    '/',
+    requireAuth,
+    async (req, res, next) => {
+      try {
+        const users = await User.findAll();
+        return res.json(users);
+      } catch (err) {
+        next(err);
+      }
+    }
+  );
+
+
+
 module.exports = router;

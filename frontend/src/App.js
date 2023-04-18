@@ -9,6 +9,7 @@ import LogoHeader from "./components/Logo";
 import SpotComponent from "./components/HomeSpots";
 import SpotDetails from "./components/SpotById";
 import CreateSpotComponent from "./components/CreateSpotForm";
+import ManageSpotsComponent from "./components/ManageSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ function App() {
           <Route path='/spots/:id'>
             <SpotDetails />
           </Route>
+          <Route path='/manage-spots'>
+            <ManageSpotsComponent />
+          </Route>
+
           <Route path ="/">
             <SpotComponent />
           </Route>

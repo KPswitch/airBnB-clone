@@ -1,0 +1,51 @@
+Copy code
+.create-container {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.create-container h1,
+.create-container h2,
+.create-container p {
+  margin-bottom: 10px;
+}
+
+.create-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.create-container input[type="text"],
+.create-container textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.create-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.create-container button[type="submit"] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.create-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
