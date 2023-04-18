@@ -39,7 +39,7 @@ const UpdateSpotComponent = ({data}) => {
         event.preventDefault();
 
         const updatedSpotData = {...spotData}
-        console.log(updatedSpotData)
+        //console.log(updatedSpotData)
        dispatch(updateCurrentSpot(updatedSpotData));
         // setSpotData({
         // country:'',
