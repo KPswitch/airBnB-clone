@@ -12,7 +12,7 @@ module.exports = {
       {
         userId: 1,
         spotId: 4,
-        review: "We really enjoyed our stay at this Airbnb rental. The apartment was clean and well-maintained, with nice touches like fresh flowers and a welcome basket. The bed was comfortable and the bathroom was modern and spacious. The kitchen was fully equipped and allowed us to cook some of our own meals. The location was great, with easy access to public transportation and lots of restaurants and cafes nearby",
+        review: "We really enjoyed our stay at this Airbnb rental. The ...",
         stars: 5
       },
       {
@@ -24,7 +24,7 @@ module.exports = {
       {
         userId: 4,
         spotId: 2,
-        review: "We had an amazing time at this Airbnb rental! The apartment was beautiful...",
+        review: "We had an amazing time at this Airbnb rental! The apartment...",
         stars: 5
       },
       {
